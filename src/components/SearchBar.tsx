@@ -1,5 +1,3 @@
-// components/SearchBar.tsx
-
 import React from 'react'
 
 interface SearchBarProps {
@@ -11,14 +9,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
 	searchTerm,
 	onSearchChange,
 }) => (
-	<div>
-		<h1>Поиск рецептов</h1>
+	<div className='mb-6'>
+		<h1 className='text-3xl font-bold mb-4 text-blue-600 animate-fadeIn'>
+			Поиск рецептов
+		</h1>
 		<input
 			type='text'
 			value={searchTerm}
 			onChange={onSearchChange}
 			placeholder='Введите название рецепта'
-			style={{ width: '70%', padding: '10px', fontSize: '18px' }}
+			className='w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300'
 		/>
 	</div>
 )

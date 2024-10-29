@@ -33,8 +33,6 @@ const RecipeDetail: React.FC = () => {
 		}
 	}, [id])
 
-	// pages/recipes/[id]/page.tsx
-
 	const handleUpdateRecipe = async (updatedRecipe: NewRecipe) => {
 		if (id) {
 			try {
@@ -44,7 +42,6 @@ const RecipeDetail: React.FC = () => {
 			} catch (error) {
 				if (axios.isAxiosError(error)) {
 					if (error.response && error.response.status === 409) {
-						// Обработка ошибки 409 Conflict
 						alert(
 							error.response.data.message ||
 								'Рецепт с таким именем уже существует.'
@@ -72,12 +69,17 @@ const RecipeDetail: React.FC = () => {
 	}
 
 	if (!recipe) {
-		return <p>Загрузка...</p>
+		return <p className='text-center text-gray-600'>Загрузка...</p>
 	}
 
 	return (
-		<div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-			<button onClick={() => router.push('/')}>Назад к списку рецептов</button>
+		<div className='p-6 max-w-4xl mx-auto animate-fadeIn'>
+			<button
+				onClick={() => router.push('/')}
+				className='mb-6 px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300'
+			>
+				Назад к списку рецептов
+			</button>
 
 			{isEditing ? (
 				<AddRecipeForm
@@ -86,21 +88,47 @@ const RecipeDetail: React.FC = () => {
 					onCancel={() => setIsEditing(false)}
 				/>
 			) : (
-				<div>
-					<h1>{recipe.name}</h1>
-					<p>Вегетарианский: {recipe.isVegetarian ? 'Да' : 'Нет'}</p>
-					<p>Веганский: {recipe.isVegan ? 'Да' : 'Нет'}</p>
-					<h2>Ингредиенты:</h2>
-					<ul>
+				<div className='bg-white p-6 rounded-lg shadow-md'>
+					<h1 className='text-3xl font-bold text-blue-600 mb-4'>
+						{recipe.name}
+					</h1>
+					<p className='text-lg text-gray-700 mb-2'>
+						Вегетарианский:{' '}
+						<span className='font-semibold'>
+							{recipe.isVegetarian ? 'Да' : 'Нет'}
+						</span>
+					</p>
+					<p className='text-lg text-gray-700 mb-4'>
+						Веганский:{' '}
+						<span className='font-semibold'>
+							{recipe.isVegan ? 'Да' : 'Нет'}
+						</span>
+					</p>
+					<h2 className='text-2xl font-semibold text-green-600 mb-3'>
+						Ингредиенты:
+					</h2>
+					<ul className='list-disc list-inside space-y-2'>
 						{recipe.ingredients.map((ingredient, index) => (
-							<li key={index}>
-								{ingredient.name} - {ingredient.quantity} {ingredient.unit}
+							<li
+								key={index}
+								className='text-gray-700 hover:text-gray-900 transition duration-200'
+							>
+								<span className='font-semibold'>{ingredient.name}</span> -{' '}
+								{ingredient.quantity} {ingredient.unit}
 							</li>
 						))}
 					</ul>
-					<div style={{ marginTop: '20px' }}>
-						<button onClick={() => setIsEditing(true)}>Редактировать</button>
-						<button onClick={handleDeleteRecipe} style={{ marginLeft: '10px' }}>
+					<div className='flex space-x-4 mt-6'>
+						<button
+							onClick={() => setIsEditing(true)}
+							className='px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300'
+						>
+							Редактировать
+						</button>
+						<button
+							onClick={handleDeleteRecipe}
+							className='px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300'
+						>
 							Удалить
 						</button>
 					</div>
